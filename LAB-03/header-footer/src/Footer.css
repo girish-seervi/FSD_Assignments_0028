@@ -1,0 +1,243 @@
+.ixigo-footer {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 16px 0 12px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Route Category Tabs Header */
+.footer-tabs-wrapper {
+  border-bottom: 1px solid #d1d5db;
+  margin-bottom: 12px;
+}
+
+.footer-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-tab {
+  background: none;
+  border: none;
+  padding: 4px 0 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.footer-tab:hover {
+  color: #0561fc;
+}
+
+.footer-tab.active {
+  color: #0561fc;
+  font-weight: 700;
+  border-bottom-color: #0561fc;
+}
+
+/* 5 Column Links Grid */
+.route-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.route-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.route-link {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 12px;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.route-link:hover {
+  color: #0561fc;
+}
+
+/* Important Links Section */
+.important-links-section {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  margin-bottom: 14px;
+}
+
+.important-links-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 6px 0;
+}
+
+.important-links-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.imp-link {
+  text-decoration: none;
+  color: #6b7280;
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+.imp-link:hover {
+  color: #0561fc;
+}
+
+.link-dot {
+  color: #9ca3af;
+  font-size: 9px;
+}
+
+/* App Download Section */
+.app-download-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.app-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.store-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 5px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.store-btn:hover {
+  opacity: 0.9;
+}
+
+.btn-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-text .sub {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #d1d5db;
+}
+
+.btn-text .main {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Company & Legal Links */
+.company-links-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.company-links-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.company-links-row a {
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 11px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.company-links-row a:hover {
+  color: #0561fc;
+}
+
+.company-links-row .dot {
+  color: #9ca3af;
+  font-size: 8px;
+}
+
+.company-links-row.secondary a {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Copyright Section */
+.copyright-section {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.copyright-section p {
+  margin: 0;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Social Links Section */
+.social-links-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #4b5563;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+  background-color: #0561fc;
+}
+
+@media (max-width: 900px) {
+  .route-columns-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
