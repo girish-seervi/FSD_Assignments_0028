@@ -1,3 +1,4 @@
 node_modules/
 .cache/
 .DS_Store
+LAB-03/package-lock.json
