@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users - Family Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/users">
+        <i class="bi bi-people-fill me-2 text-primary"></i>Family Management
+      </a>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    
+    <div class="hero-header text-center">
+      <h1 class="display-5 fw-bold mb-3">Welcome to Family Management</h1>
+      <p class="lead mb-0 opacity-75">Organize your family members, add children, and keep everything in one place.</p>
+    </div>
+
+    <!-- Actions Row: Search & Add User -->
+    <div class="row mb-5 g-4">
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="mb-0"><i class="bi bi-search me-2 text-primary"></i>Find User</h5>
+          </div>
+          <div class="card-body">
+            <form action="/users/search" method="GET" id="searchForm">
+              <div class="input-group">
+                <input type="text" id="searchInput" name="name" class="form-control" placeholder="Search by First Name...">
+                <button type="submit" class="btn btn-primary" onclick="event.preventDefault(); window.location.href='/users/search/' + document.getElementById('searchInput').value">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-8">
+        <div class="card h-100 border-primary border-opacity-25 border-top border-4">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="mb-0"><i class="bi bi-person-plus-fill me-2 text-primary"></i>Add New User</h5>
+          </div>
+          <div class="card-body">
+            <form action="/users" method="POST">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <input type="text" class="form-control bg-light border-0" name="firstName" placeholder="First Name" required>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control bg-light border-0" name="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="col-md-3">
+                  <input type="email" class="form-control bg-light border-0" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                  <input type="text" class="form-control bg-light border-0" name="phone" placeholder="Phone">
+                  <button type="submit" class="btn btn-primary px-4"><i class="bi bi-plus-lg"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="fw-bold mb-4">All Users</h3>
+    <div class="row g-4 mb-5">
+      <% if (users && users.length > 0) { %>
+        <% users.forEach(user => { %>
+          <div class="col-md-4 col-sm-6">
+            <div class="card user-card h-100">
+              <div class="card-body p-4 text-center">
+                <div class="mb-3">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle" style="width: 64px; height: 64px; font-size: 1.5rem; font-weight: bold;">
+                    <%= user.firstName.charAt(0) %><%= user.lastName.charAt(0) %>
+                  </div>
+                </div>
+                <h5 class="card-title fw-bold mb-3"><%= user.firstName %> <%= user.lastName %></h5>
+                
+                <div class="text-start mb-4 px-2">
+                  <div class="icon-text">
+                    <i class="bi bi-envelope text-muted"></i>
+                    <span class="text-truncate" title="<%= user.email %>"><%= user.email %></span>
+                  </div>
+                  <div class="icon-text">
+                    <i class="bi bi-telephone text-muted"></i>
+                    <span><%= user.phone || 'No phone provided' %></span>
+                  </div>
+                </div>
+                
+                <a href="/users/<%= user._id %>" class="btn btn-outline-primary w-100">View Profile</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="col-12">
+          <div class="text-center p-5 bg-white rounded-4 shadow-sm border border-light">
+            <i class="bi bi-people display-1 text-muted mb-3 d-block opacity-25"></i>
+            <h4 class="text-muted">No users found.</h4>
+            <p class="text-muted mb-0">Try adding a new user above.</p>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

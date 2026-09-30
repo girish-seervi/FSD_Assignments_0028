@@ -1,0 +1,30 @@
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+  <div class="card-header bg-primary bg-opacity-10 border-0 p-4 pb-3">
+    <h5 class="fw-bold text-primary mb-0"><i class="bi bi-person-add me-2"></i>Register New Child</h5>
+  </div>
+  <div class="card-body p-4 pt-3 bg-white">
+    <form action="/users/<%= userId %>/children" method="POST">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label text-muted small fw-bold mb-1">First Name</label>
+          <input type="text" class="form-control bg-light border-0" name="firstName" placeholder="e.g. Jimmy" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label text-muted small fw-bold mb-1">Last Name</label>
+          <input type="text" class="form-control bg-light border-0" name="lastName" placeholder="e.g. Doe" required>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small fw-bold mb-1">Age</label>
+          <input type="number" class="form-control bg-light border-0" name="age" placeholder="Age" required min="0">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label text-muted small fw-bold mb-1">Email (Optional)</label>
+          <div class="d-flex gap-2">
+            <input type="email" class="form-control bg-light border-0" name="email" placeholder="Child's Email">
+            <button type="submit" class="btn btn-primary px-4 fw-bold"><i class="bi bi-plus-lg"></i> Add</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Child Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/users">
+        <i class="bi bi-people-fill me-2 text-primary"></i>Family Management
+      </a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/users"><i class="bi bi-people me-1"></i>All Users</a>
+        <a class="nav-link" href="/users/<%= parentId %>"><i class="bi bi-arrow-left me-1"></i>Back to Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto overflow-hidden" style="max-width: 600px;">
+      <div class="card-header bg-info bg-opacity-10 border-0 p-4">
+        <h4 class="mb-0 text-info fw-bold"><i class="bi bi-person-badge me-2"></i>Child Information</h4>
+      </div>
+      <div class="card-body p-5 text-center">
+        
+        <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info rounded-circle mb-4" style="width: 80px; height: 80px; font-size: 2rem;">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        
+        <h2 class="fw-bold mb-4"><%= child.firstName %> <%= child.lastName %></h2>
+        
+        <div class="bg-light rounded-4 p-4 text-start mb-4">
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="text-muted small fw-bold text-uppercase mb-1">Age</div>
+              <div class="fs-5"><%= child.age %> years</div>
+            </div>
+            <div class="col-6">
+              <div class="text-muted small fw-bold text-uppercase mb-1">Email Address</div>
+              <div class="fs-5 text-truncate" title="<%= child.email || 'N/A' %>"><%= child.email || 'Not Provided' %></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="d-flex gap-3 justify-content-center mt-5">
+          <a href="/users/<%= parentId %>" class="btn btn-light fw-bold px-4">Go Back</a>
+          <form action="/children/<%= child._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this child?');" class="d-inline">
+            <button type="submit" class="btn btn-danger fw-bold px-4"><i class="bi bi-trash3-fill me-2"></i>Delete Record</button>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</body>
+</html>
