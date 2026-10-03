@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProTasker - Advanced Task Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-check-double"></i>
+                <h2>ProTasker</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <p class="nav-label">VIEWS</p>
+                <ul>
+                    <li class="active" data-filter="all"><i class="fa-solid fa-inbox"></i> All Tasks</li>
+                    <li data-filter="today"><i class="fa-regular fa-calendar-check"></i> Today</li>
+                    <li data-filter="important"><i class="fa-solid fa-star"></i> Important</li>
+                    <li data-filter="completed"><i class="fa-solid fa-circle-check"></i> Completed</li>
+                </ul>
+
+                <p class="nav-label mt-2">CATEGORIES</p>
+                <ul id="categoryList">
+                    <li data-category="work"><span class="dot work-dot"></span> Work</li>
+                    <li data-category="personal"><span class="dot personal-dot"></span> Personal</li>
+                    <li data-category="study"><span class="dot study-dot"></span> Study</li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="themeToggle" class="theme-btn">
+                    <i class="fa-solid fa-moon"></i> Dark Mode
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="main-header">
+                <div>
+                    <h1 id="currentViewTitle">All Tasks</h1>
+                    <p id="dateDisplay" class="date-display">Monday, Jan 1</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search tasks...">
+                    </div>
+                    <div class="progress-container">
+                        <span id="progressText">0% Complete</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Add Task Form -->
+            <section class="add-task-section">
+                <form id="taskForm" class="task-form">
+                    <div class="input-group">
+                        <input type="text" id="taskTitle" placeholder="What needs to be done?" required autocomplete="off">
+                    </div>
+                    <div class="form-options">
+                        <select id="taskCategory">
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="study">Study</option>
+                        </select>
+                        <input type="date" id="taskDate">
+                        <button type="button" id="importantToggle" class="btn-icon" title="Mark as Important">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+                        <button type="submit" class="btn-primary">Add Task</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Tasks Container -->
+            <section class="tasks-container">
+                <div id="emptyState" class="empty-state hidden">
+                    <img src="https://illustrations.popsy.co/amber/freelancer.svg" alt="No tasks" width="200">
+                    <h3>All caught up!</h3>
+                    <p>You have no tasks in this view.</p>
+                </div>
+                <ul id="taskList" class="task-list">
+                    <!-- Tasks injected by JS -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">Task added successfully!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
