@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Globe, Layout, CheckCircle2, Component, Sparkles } from 'lucide-react';
 
 export default function HeroSection() {
@@ -43,12 +44,12 @@ export default function HeroSection() {
 
         {/* Buttons */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
-          <a href="#http-demo" className="btn btn-primary" style={{ padding: '0.85rem 1.8rem', fontSize: '1rem' }}>
+          <Link to="/http-demo" className="btn btn-primary" style={{ padding: '0.85rem 1.8rem', fontSize: '1rem' }}>
             Explore Interactive Demos <ArrowRight size={18} />
-          </a>
-          <a href="#registration" className="btn btn-outline" style={{ padding: '0.85rem 1.8rem', fontSize: '1rem' }}>
+          </Link>
+          <Link to="/registration" className="btn btn-outline" style={{ padding: '0.85rem 1.8rem', fontSize: '1rem' }}>
             Try Student Registration Form
-          </a>
+          </Link>
         </div>
 
         {/* 4 Core Tutorial Pills / Feature Cards Grid */}
@@ -60,7 +61,7 @@ export default function HeroSection() {
           margin: '0 auto'
         }}>
           {tutorialCards.map((card, idx) => (
-            <div key={idx} style={{
+            <Link key={idx} to={card.path} style={{
               backgroundColor: '#ffffff',
               padding: '1.25rem 1rem',
               borderRadius: 'var(--radius-md)',
@@ -69,8 +70,13 @@ export default function HeroSection() {
               display: 'flex',
               alignItems: 'center',
               gap: '1rem',
-              textAlign: 'left'
-            }}>
+              textAlign: 'left',
+              textDecoration: 'none',
+              transition: 'transform var(--transition-fast), box-shadow var(--transition-fast)',
+              cursor: 'pointer'
+            }}
+            className="tutorial-card-hover"
+            >
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -92,7 +98,7 @@ export default function HeroSection() {
                   {card.title}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -105,24 +111,28 @@ const tutorialCards = [
     title: 'HTTP Request-Response',
     icon: <Globe size={22} />,
     bg: 'var(--primary-50)',
-    color: 'var(--primary-600)'
+    color: 'var(--primary-600)',
+    path: '/http-demo'
   },
   {
     title: 'Flexbox & CSS Grid',
     icon: <Layout size={22} />,
     bg: '#f0fdf4',
-    color: '#16a34a'
+    color: '#16a34a',
+    path: '/layouts'
   },
   {
     title: 'Form Validation & State',
     icon: <CheckCircle2 size={22} />,
     bg: '#fefce8',
-    color: '#ca8a04'
+    color: '#ca8a04',
+    path: '/registration'
   },
   {
     title: 'React Components',
     icon: <Component size={22} />,
     bg: '#faf5ff',
-    color: '#9333ea'
+    color: '#9333ea',
+    path: '/concepts'
   }
 ];

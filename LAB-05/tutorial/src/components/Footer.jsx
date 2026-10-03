@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Code2, Heart, ArrowUp } from 'lucide-react';
 
 export default function Footer() {
@@ -63,10 +64,10 @@ export default function Footer() {
               Tutorial Modules
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.88rem' }}>
-              <li><a href="#http-demo" style={footerLinkStyle}>Tutorial 1: HTTP Fetch API Demo</a></li>
-              <li><a href="#layout-demo" style={footerLinkStyle}>Tutorial 2: Flexbox & CSS Grid</a></li>
-              <li><a href="#registration" style={footerLinkStyle}>Tutorial 3: Form Validation & State</a></li>
-              <li><a href="#concepts" style={footerLinkStyle}>Tutorial 4: Component Summary</a></li>
+              <li><Link to="/http-demo" style={footerLinkStyle}>Tutorial 1: HTTP Fetch API Demo</Link></li>
+              <li><Link to="/layouts" style={footerLinkStyle}>Tutorial 2: Flexbox & CSS Grid</Link></li>
+              <li><Link to="/registration" style={footerLinkStyle}>Tutorial 3: Form Validation & State</Link></li>
+              <li><Link to="/concepts" style={footerLinkStyle}>Tutorial 4: Component Summary</Link></li>
             </ul>
           </div>
 

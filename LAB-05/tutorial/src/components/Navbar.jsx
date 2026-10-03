@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Code2, Globe, LayoutGrid, UserPlus, BookOpen, Layers } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
+import { Code2, Globe, LayoutGrid, UserPlus, BookOpen, Layers, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,13 +18,27 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const getNavLinkStyle = ({ isActive }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.4rem',
+    fontSize: '0.92rem',
+    fontWeight: isActive ? 700 : 600,
+    color: isActive ? 'var(--primary-600)' : 'var(--slate-700)',
+    textDecoration: 'none',
+    padding: '0.4rem 0.75rem',
+    borderRadius: 'var(--radius-md)',
+    backgroundColor: isActive ? 'var(--primary-50)' : 'transparent',
+    transition: 'all var(--transition-fast)'
+  });
+
   return (
     <nav
       style={{
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.92)' : '#ffffff',
+        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : '#ffffff',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: '1px solid var(--slate-200)',
         boxShadow: scrolled ? 'var(--shadow-md)' : 'none',
@@ -32,7 +47,7 @@ export default function Navbar() {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
         {/* Brand Logo */}
-        <a href="#hero" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
           <div style={{
             width: '40px',
             height: '40px',
@@ -54,22 +69,25 @@ export default function Navbar() {
               BCA Web Tech Lab
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
-        <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <a href="#http-demo" style={linkStyle}>
+        <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <NavLink to="/" end style={getNavLinkStyle}>
+            Home
+          </NavLink>
+          <NavLink to="/http-demo" style={getNavLinkStyle}>
             <Globe size={16} /> HTTP Demo
-          </a>
-          <a href="#layout-demo" style={linkStyle}>
-            <LayoutGrid size={16} /> Layouts (Flex & Grid)
-          </a>
-          <a href="#registration" style={linkStyle}>
+          </NavLink>
+          <NavLink to="/layouts" style={getNavLinkStyle}>
+            <LayoutGrid size={16} /> Layouts
+          </NavLink>
+          <NavLink to="/registration" style={getNavLinkStyle}>
             <UserPlus size={16} /> Student Registration
-          </a>
-          <a href="#concepts" style={linkStyle}>
-            <BookOpen size={16} /> Concepts Summary
-          </a>
+          </NavLink>
+          <NavLink to="/concepts" style={getNavLinkStyle}>
+            <BookOpen size={16} /> Concepts
+          </NavLink>
         </div>
 
         {/* Lab Badge */}
@@ -94,13 +112,3 @@ export default function Navbar() {
   );
 }
 
-const linkStyle = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '0.4rem',
-  fontSize: '0.92rem',
-  fontWeight: 600,
-  color: 'var(--slate-700)',
-  textDecoration: 'none',
-  transition: 'color var(--transition-fast)'
-};
