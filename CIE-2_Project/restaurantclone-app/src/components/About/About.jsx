@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-scroll";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 const About = () => {
@@ -15,7 +15,7 @@ const About = () => {
             <p className="mid">
               We are a passionate team dedicated to crafting exceptional meals using the freshest ingredients. Our journey began with a simple belief that great food brings people together. From farm-to-table freshness to our warm, welcoming atmosphere, we strive to deliver an unforgettable dining experience for every guest that walks through our doors.
             </p>
-            <Link to={"/"}>
+            <Link to="menu" spy={true} smooth={true} duration={500}>
               Explore Menu{" "}
               <span>
                 <HiOutlineArrowRight />
