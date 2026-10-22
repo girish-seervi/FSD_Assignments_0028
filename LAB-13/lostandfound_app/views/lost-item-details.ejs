@@ -1,0 +1,67 @@
+<%- include('partials/header', { title: item.itemName + ' - Lost Item Details', activePage: 'lost-items' }) %>
+
+<div class="page-header">
+  <div>
+    <h1><%= item.itemName %></h1>
+    <p>Lost Item Report</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <a href="/lost-items" class="btn btn-secondary">&larr; Back to Lost Items</a>
+    <a href="/lost-items/new" class="btn btn-warning btn-sm">+ Report Another</a>
+  </div>
+</div>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+
+<div class="details-card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem;">
+    <span class="badge badge-category" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;"><%= item.category %></span>
+    <span class="badge badge-lost" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;"><%= item.status %></span>
+  </div>
+
+  <div class="details-grid">
+    <div class="detail-item">
+      <dt>Report ID</dt>
+      <dd><code><%= item._id %></code></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Last Seen Location</dt>
+      <dd><%= item.lastSeenLocation %></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Date Lost</dt>
+      <dd><%= new Date(item.dateLost).toLocaleDateString() %></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Reported On</dt>
+      <dd><%= new Date(item.createdAt).toLocaleString() %></dd>
+    </div>
+  </div>
+
+  <div style="margin: 1.5rem 0;">
+    <h3 style="font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--text-main);">Item Description</h3>
+    <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; color: #334155; line-height: 1.7;">
+      <%= item.description %>
+    </div>
+  </div>
+
+  <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+    <h3 style="font-size: 1.05rem; margin-bottom: 1rem; color: var(--text-main);">Reporter Information</h3>
+    <% if (item.reportedBy) { %>
+      <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h4 style="font-size: 1rem; margin-bottom: 0.25rem;"><a href="/students/<%= item.reportedBy._id %>"><%= item.reportedBy.fullName %></a></h4>
+          <p style="color: var(--text-muted); font-size: 0.875rem;"><%= item.reportedBy.department %></p>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Email: <a href="mailto:<%= item.reportedBy.email %>"><%= item.reportedBy.email %></a> | Phone: <a href="tel:<%= item.reportedBy.contactNumber %>"><%= item.reportedBy.contactNumber %></a></p>
+        </div>
+        <a href="/students/<%= item.reportedBy._id %>" class="btn btn-sm btn-outline">View Student Profile &rarr;</a>
+      </div>
+    <% } else { %>
+      <p style="color: var(--text-muted);">Reporter details not available.</p>
+    <% } %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

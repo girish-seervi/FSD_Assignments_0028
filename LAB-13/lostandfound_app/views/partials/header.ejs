@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - Campus Lost & Found' : 'Campus Lost & Found' %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      Campus Lost &amp; Found
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="<%= typeof activePage !== 'undefined' && activePage === 'home' ? 'active' : '' %>">Dashboard</a></li>
+      <li><a href="/lost-items" class="<%= typeof activePage !== 'undefined' && activePage === 'lost-items' ? 'active' : '' %>">Lost Items</a></li>
+      <li><a href="/found-items" class="<%= typeof activePage !== 'undefined' && activePage === 'found-items' ? 'active' : '' %>">Found Items</a></li>
+      <li><a href="/students" class="<%= typeof activePage !== 'undefined' && activePage === 'students' ? 'active' : '' %>">Students</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="/lost-items/new" class="btn btn-warning btn-sm">+ Report Lost</a>
+      <a href="/found-items/new" class="btn btn-success btn-sm">+ Report Found</a>
+    </div>
+  </nav>
+
+  <main class="container">

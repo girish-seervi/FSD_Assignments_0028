@@ -1,0 +1,13 @@
+<%- include('partials/header', { title: '404 - Not Found' }) %>
+
+<div class="empty-state" style="padding: 4rem 1.5rem;">
+  <h1 style="font-size: 3rem; color: var(--danger); margin-bottom: 0.5rem;">404</h1>
+  <h2 style="font-size: 1.5rem; margin-bottom: 1rem;"><%= typeof message !== 'undefined' ? message : 'Resource Not Found' %></h2>
+  <p style="margin-bottom: 2rem;">The requested student profile, lost item, or page could not be found or may have been removed.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <a href="/" class="btn btn-primary">Return to Dashboard</a>
+    <a href="javascript:history.back()" class="btn btn-outline">&larr; Go Back</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

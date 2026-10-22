@@ -1,0 +1,13 @@
+<%- include('partials/header', { title: (typeof statusCode !== 'undefined' ? statusCode : '500') + ' - Error' }) %>
+
+<div class="empty-state" style="padding: 4rem 1.5rem;">
+  <h1 style="font-size: 3rem; color: var(--danger); margin-bottom: 0.5rem;"><%= typeof statusCode !== 'undefined' ? statusCode : '500' %></h1>
+  <h2 style="font-size: 1.5rem; margin-bottom: 1rem;"><%= typeof title !== 'undefined' ? title : 'An Error Occurred' %></h2>
+  <p style="margin-bottom: 2rem;"><%= typeof message !== 'undefined' ? message : 'Something went wrong while processing your request. Please try again.' %></p>
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <a href="/" class="btn btn-primary">Return to Dashboard</a>
+    <a href="javascript:history.back()" class="btn btn-outline">&larr; Go Back</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

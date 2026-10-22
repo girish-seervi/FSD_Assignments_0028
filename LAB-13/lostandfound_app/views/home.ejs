@@ -1,0 +1,121 @@
+<%- include('partials/header', { title: 'Dashboard', activePage: 'home' }) %>
+
+<div class="action-banner">
+  <div>
+    <h2>Campus Lost &amp; Found System</h2>
+    <p>A centralized platform for campus students to report lost personal belongings, register found items, and reconnect owners with their items.</p>
+  </div>
+  <div class="action-buttons">
+    <a href="/lost-items/new" class="btn btn-warning">Report Lost Item</a>
+    <a href="/found-items/new" class="btn btn-success">Report Found Item</a>
+    <a href="/students/new" class="btn btn-secondary">Register Student</a>
+  </div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-title">Registered Students</div>
+    <div class="metric-value"><%= studentCount %></div>
+    <a href="/students" class="metric-link">View all students &rarr;</a>
+  </div>
+  <div class="metric-card">
+    <div class="metric-title">Reported Lost Items</div>
+    <div class="metric-value"><%= lostCount %></div>
+    <a href="/lost-items" class="metric-link">Browse lost items &rarr;</a>
+  </div>
+  <div class="metric-card">
+    <div class="metric-title">Registered Found Items</div>
+    <div class="metric-value"><%= foundCount %></div>
+    <a href="/found-items" class="metric-link">Browse found items &rarr;</a>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+  <!-- Recent Lost Items -->
+  <section>
+    <div class="page-header" style="margin-bottom: 1rem;">
+      <h2>Recent Lost Items</h2>
+      <a href="/lost-items" class="btn btn-sm btn-outline">View All</a>
+    </div>
+    <% if (recentLostItems && recentLostItems.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% recentLostItems.forEach(item => { %>
+          <div class="card">
+            <div class="card-header">
+              <a href="/lost-items/<%= item._id %>" class="card-title"><%= item.itemName %></a>
+              <span class="badge badge-lost"><%= item.status %></span>
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-category" style="width: fit-content;"><%= item.category %></span>
+              <div class="card-meta-row">
+                <strong>Last seen:</strong> <%= item.lastSeenLocation %>
+              </div>
+              <div class="card-meta-row">
+                <strong>Date:</strong> <%= new Date(item.dateLost).toLocaleDateString() %>
+              </div>
+              <% if (item.reportedBy) { %>
+                <div class="card-meta-row">
+                  <strong>Reported by:</strong> <a href="/students/<%= item.reportedBy._id %>"><%= item.reportedBy.fullName %></a>
+                </div>
+              <% } %>
+            </div>
+            <p class="card-description"><%= item.description %></p>
+            <div class="card-footer">
+              <a href="/lost-items/<%= item._id %>" class="btn btn-sm btn-outline">View Details</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <p>No lost items reported yet.</p>
+        <a href="/lost-items/new" class="btn btn-sm btn-warning">Report Lost Item</a>
+      </div>
+    <% } %>
+  </section>
+
+  <!-- Recent Found Items -->
+  <section>
+    <div class="page-header" style="margin-bottom: 1rem;">
+      <h2>Recent Found Items</h2>
+      <a href="/found-items" class="btn btn-sm btn-outline">View All</a>
+    </div>
+    <% if (recentFoundItems && recentFoundItems.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% recentFoundItems.forEach(item => { %>
+          <div class="card">
+            <div class="card-header">
+              <a href="/found-items/<%= item._id %>" class="card-title"><%= item.itemName %></a>
+              <span class="badge badge-found"><%= item.status %></span>
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-category" style="width: fit-content;"><%= item.category %></span>
+              <div class="card-meta-row">
+                <strong>Found at:</strong> <%= item.foundLocation %>
+              </div>
+              <div class="card-meta-row">
+                <strong>Date:</strong> <%= new Date(item.dateFound).toLocaleDateString() %>
+              </div>
+              <% if (item.reportedBy) { %>
+                <div class="card-meta-row">
+                  <strong>Reported by:</strong> <a href="/students/<%= item.reportedBy._id %>"><%= item.reportedBy.fullName %></a>
+                </div>
+              <% } %>
+            </div>
+            <p class="card-description"><%= item.description %></p>
+            <div class="card-footer">
+              <a href="/found-items/<%= item._id %>" class="btn btn-sm btn-outline">View Details</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <p>No found items reported yet.</p>
+        <a href="/found-items/new" class="btn btn-sm btn-success">Report Found Item</a>
+      </div>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>
