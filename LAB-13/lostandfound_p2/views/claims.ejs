@@ -1,0 +1,119 @@
+<%- include('partials/header', { title: 'Claims Tracker', activePage: 'claims' }) %>
+
+<div class="page-header">
+  <div>
+    <h1>Claims Tracker &amp; Review (Phase 2)</h1>
+    <p>Monitor claims across campus, verify item returns, and review ownership status</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <a href="/found-items" class="btn btn-outline">&larr; Browse Found Items</a>
+  </div>
+</div>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+
+<% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+  <div class="alert alert-error" style="background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 0.85rem 1.25rem; border-radius: var(--radius); margin-bottom: 1.5rem;">
+    <%= errorMessage %>
+  </div>
+<% } %>
+
+<!-- Filter Navigation Pills -->
+<div class="claim-filter-nav">
+  <a href="/claims" class="claim-filter-btn <%= !selectedStatus ? 'active' : '' %>">
+    All Claims (<%= totalClaims %>)
+  </a>
+  <a href="/claims?status=Pending" class="claim-filter-btn <%= selectedStatus === 'Pending' ? 'active' : '' %>" style="border-left: 3px solid #d97706;">
+    ⏳ Pending (<%= pendingClaimsCount %>)
+  </a>
+  <a href="/claims?status=Approved" class="claim-filter-btn <%= selectedStatus === 'Approved' ? 'active' : '' %>" style="border-left: 3px solid #059669;">
+    ✓ Approved (<%= approvedClaimsCount %>)
+  </a>
+  <a href="/claims?status=Rejected" class="claim-filter-btn <%= selectedStatus === 'Rejected' ? 'active' : '' %>" style="border-left: 3px solid #dc2626;">
+    ✗ Rejected (<%= rejectedClaimsCount %>)
+  </a>
+</div>
+
+<!-- Claims List -->
+<% if (claims && claims.length > 0) { %>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <% claims.forEach(claim => { %>
+      <div class="claim-card">
+        <div class="claim-card-header">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div>
+              <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Claim for:</span>
+              <% if (claim.foundItemId) { %>
+                <h3 style="font-size: 1.15rem; margin-top: 0.1rem;">
+                  <a href="/found-items/<%= claim.foundItemId._id %>" style="color: var(--primary);">
+                    <%= claim.foundItemId.itemName %>
+                  </a>
+                  <span class="badge badge-category" style="font-size: 0.75rem; vertical-align: middle; margin-left: 0.5rem;"><%= claim.foundItemId.category %></span>
+                </h3>
+              <% } else { %>
+                <h3 style="font-size: 1.1rem; color: var(--text-muted);">[Item Record Unavailable]</h3>
+              <% } %>
+            </div>
+          </div>
+          <div>
+            <span class="badge <%= claim.status === 'Approved' ? 'badge-approved' : (claim.status === 'Rejected' ? 'badge-rejected' : 'badge-pending') %>" style="font-size: 0.85rem; padding: 0.35rem 0.75rem;">
+              <%= claim.status === 'Approved' ? '✓ Approved' : (claim.status === 'Rejected' ? '✗ Rejected' : '⏳ ' + claim.status) %>
+            </span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 0.75rem 0; font-size: 0.9rem;">
+          <div>
+            <strong>Claimant:</strong>
+            <% if (claim.claimedBy) { %>
+              <a href="/students/<%= claim.claimedBy._id %>"><%= claim.claimedBy.fullName %></a>
+              <span style="color: var(--text-muted); font-size: 0.85rem;">(<%= claim.claimedBy.department %>)</span>
+              <div style="font-size: 0.8rem; color: var(--text-muted);"><%= claim.claimedBy.email %> &bull; <%= claim.claimedBy.contactNumber %></div>
+            <% } else { %>
+              <span style="color: var(--text-muted);">[Unknown]</span>
+            <% } %>
+          </div>
+
+          <div>
+            <strong>Found by:</strong>
+            <% if (claim.foundItemId && claim.foundItemId.reportedBy) { %>
+              <a href="/students/<%= claim.foundItemId.reportedBy._id %>"><%= claim.foundItemId.reportedBy.fullName %></a>
+              <span style="color: var(--text-muted); font-size: 0.85rem;">(<%= claim.foundItemId.reportedBy.department %>)</span>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Found at: <%= claim.foundItemId.foundLocation %></div>
+            <% } else { %>
+              <span style="color: var(--text-muted);">[Unknown]</span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="claim-reason-box">
+          <strong>Proof of ownership:</strong> "<%= claim.reason %>"
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <span>Submitted: <%= new Date(claim.createdAt).toLocaleString() %></span> &bull; 
+            <span>Last Updated: <%= new Date(claim.updatedAt).toLocaleString() %></span>
+          </div>
+          <% if (claim.foundItemId) { %>
+            <a href="/found-items/<%= claim.foundItemId._id %>" class="btn btn-sm btn-outline">
+              Review on Item Page &rarr;
+            </a>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div class="empty-state">
+    <h3>No claims found</h3>
+    <p>
+      <%= selectedStatus ? `There are currently no claims with status "${selectedStatus}".` : 'No ownership claims have been submitted yet on the platform.' %>
+    </p>
+    <a href="/found-items" class="btn btn-primary">Browse Found Items to Claim</a>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,52 @@
+<%- include('partials/header', { title: 'Students Directory', activePage: 'students' }) %>
+
+<div class="page-header">
+  <div>
+    <h1>Student Profiles</h1>
+    <p>Directory of registered students on Campus Lost &amp; Found</p>
+  </div>
+  <a href="/students/new" class="btn btn-primary">+ Register Student</a>
+</div>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+
+<% if (students && students.length > 0) { %>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>College Email</th>
+          <th>Department</th>
+          <th>Contact Number</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% students.forEach(student => { %>
+          <tr>
+            <td>
+              <strong><a href="/students/<%= student._id %>"><%= student.fullName %></a></strong>
+            </td>
+            <td><%= student.email %></td>
+            <td><%= student.department %></td>
+            <td><%= student.contactNumber %></td>
+            <td>
+              <a href="/students/<%= student._id %>" class="btn btn-sm btn-outline">View Profile</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } else { %>
+  <div class="empty-state">
+    <h3>No students registered yet</h3>
+    <p>Register the first student profile to begin reporting lost and found items.</p>
+    <a href="/students/new" class="btn btn-primary">Register Student</a>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

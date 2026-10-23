@@ -1,0 +1,169 @@
+<%- include('partials/header', { title: student.fullName + ' - Profile', activePage: 'students' }) %>
+
+<div class="page-header">
+  <div>
+    <h1><%= student.fullName %></h1>
+    <p>Student Profile &bull; <%= student.department %></p>
+  </div>
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <a href="/students" class="btn btn-secondary">&larr; All Students</a>
+    <a href="/lost-items/new" class="btn btn-warning btn-sm">+ Report Lost</a>
+    <a href="/found-items/new" class="btn btn-success btn-sm">+ Report Found</a>
+  </div>
+</div>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+
+<!-- Student Information Card -->
+<div class="details-card" style="margin-bottom: 2.5rem;">
+  <h2>Student Information</h2>
+  <div class="details-grid">
+    <div class="detail-item">
+      <dt>Student ID (Database)</dt>
+      <dd><code><%= student._id %></code></dd>
+    </div>
+    <div class="detail-item">
+      <dt>College Email</dt>
+      <dd><a href="mailto:<%= student.email %>"><%= student.email %></a></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Department</dt>
+      <dd><%= student.department %></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Contact Number</dt>
+      <dd><a href="tel:<%= student.contactNumber %>"><%= student.contactNumber %></a></dd>
+    </div>
+    <div class="detail-item">
+      <dt>Member Since</dt>
+      <dd><%= new Date(student.createdAt).toLocaleDateString() %></dd>
+    </div>
+  </div>
+</div>
+
+<!-- 3-Column or Responsive Grid for Lost Items, Found Items, and Claims -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+  
+  <!-- Section 1: Lost Items Reported -->
+  <div>
+    <div class="page-header" style="margin-bottom: 1rem;">
+      <h3 style="font-size: 1.15rem;">Lost Items Reported (<%= lostItems ? lostItems.length : 0 %>)</h3>
+    </div>
+    <% if (lostItems && lostItems.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% lostItems.forEach(item => { %>
+          <div class="card">
+            <div class="card-header">
+              <a href="/lost-items/<%= item._id %>" class="card-title"><%= item.itemName %></a>
+              <span class="badge badge-lost"><%= item.status %></span>
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-category" style="width: fit-content;"><%= item.category %></span>
+              <div class="card-meta-row"><strong>Last seen:</strong> <%= item.lastSeenLocation %></div>
+              <div class="card-meta-row"><strong>Date lost:</strong> <%= new Date(item.dateLost).toLocaleDateString() %></div>
+            </div>
+            <p class="card-description"><%= item.description %></p>
+            <div class="card-footer">
+              <a href="/lost-items/<%= item._id %>" class="btn btn-sm btn-outline">View Details</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <p>No lost items reported by this student.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Section 2: Found Items Reported -->
+  <div>
+    <div class="page-header" style="margin-bottom: 1rem;">
+      <h3 style="font-size: 1.15rem;">Found Items Reported (<%= foundItems ? foundItems.length : 0 %>)</h3>
+    </div>
+    <% if (foundItems && foundItems.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% foundItems.forEach(item => { %>
+          <div class="card">
+            <div class="card-header">
+              <a href="/found-items/<%= item._id %>" class="card-title"><%= item.itemName %></a>
+              <span class="badge <%= item.status === 'Returned' ? 'badge-returned' : 'badge-found' %>">
+                <%= item.status %>
+              </span>
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-category" style="width: fit-content;"><%= item.category %></span>
+              <div class="card-meta-row"><strong>Found at:</strong> <%= item.foundLocation %></div>
+              <div class="card-meta-row"><strong>Date found:</strong> <%= new Date(item.dateFound).toLocaleDateString() %></div>
+            </div>
+            <p class="card-description"><%= item.description %></p>
+            <div class="card-footer">
+              <a href="/found-items/<%= item._id %>" class="btn btn-sm btn-outline">
+                <%= item.status === 'Returned' ? 'View Details' : 'Manage & Claims' %>
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <p>No found items reported by this student.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Section 3: Claims Submitted (Phase 2 Requirement) -->
+  <div>
+    <div class="page-header" style="margin-bottom: 1rem;">
+      <h3 style="font-size: 1.15rem;">Claims Submitted (<%= claims ? claims.length : 0 %>)</h3>
+    </div>
+    <% if (claims && claims.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% claims.forEach(claim => { %>
+          <div class="card" style="<%= claim.status === 'Approved' ? 'border-left: 3px solid #059669;' : (claim.status === 'Rejected' ? 'border-left: 3px solid #dc2626;' : 'border-left: 3px solid #d97706;') %>">
+            <div class="card-header">
+              <% if (claim.foundItemId) { %>
+                <a href="/found-items/<%= claim.foundItemId._id %>" class="card-title">
+                  <%= claim.foundItemId.itemName %>
+                </a>
+              <% } else { %>
+                <span class="card-title" style="color: var(--text-muted);">[Item removed]</span>
+              <% } %>
+              <span class="badge <%= claim.status === 'Approved' ? 'badge-approved' : (claim.status === 'Rejected' ? 'badge-rejected' : 'badge-pending') %>">
+                <%= claim.status %>
+              </span>
+            </div>
+            <div class="card-meta">
+              <div class="card-meta-row">
+                <strong>Claimed on:</strong> <%= new Date(claim.createdAt).toLocaleDateString() %>
+              </div>
+              <% if (claim.foundItemId && claim.foundItemId.reportedBy) { %>
+                <div class="card-meta-row">
+                  <strong>Finder:</strong> <%= claim.foundItemId.reportedBy.fullName || 'Registered Student' %>
+                </div>
+              <% } %>
+            </div>
+            <p class="card-description" style="font-style: italic; background: #f8fafc; padding: 0.5rem; border-radius: 4px;">
+              "<%= claim.reason %>"
+            </p>
+            <% if (claim.foundItemId) { %>
+              <div class="card-footer">
+                <a href="/found-items/<%= claim.foundItemId._id %>" class="btn btn-sm btn-outline">View Item &amp; Status &rarr;</a>
+              </div>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <p>No claims submitted by this student yet.</p>
+        <a href="/found-items" class="btn btn-sm btn-outline" style="margin-top: 0.5rem;">Browse Found Items</a>
+      </div>
+    <% } %>
+  </div>
+
+</div>
+
+<%- include('partials/footer') %>

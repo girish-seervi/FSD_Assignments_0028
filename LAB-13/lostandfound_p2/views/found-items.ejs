@@ -1,0 +1,87 @@
+<%- include('partials/header', { title: 'Found Items', activePage: 'found-items' }) %>
+
+<div class="page-header">
+  <div>
+    <h1>Found Items</h1>
+    <p>Browse items found across campus waiting to be reunited with their owners</p>
+  </div>
+  <a href="/found-items/new" class="btn btn-success">+ Report Found Item</a>
+</div>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+
+<!-- Search & Filter Bar -->
+<div class="filter-bar">
+  <form action="/found-items" method="GET">
+    <input type="text" name="search" class="search-input" placeholder="Search by name, description, or location..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+    <select name="category" class="filter-select">
+      <option value="">All Categories</option>
+      <option value="Electronics" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Electronics' ? 'selected' : '' %>>Electronics</option>
+      <option value="ID Card / Documents" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'ID Card / Documents' ? 'selected' : '' %>>ID Card / Documents</option>
+      <option value="Books / Stationery" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Books / Stationery' ? 'selected' : '' %>>Books / Stationery</option>
+      <option value="Clothing / Accessories" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Clothing / Accessories' ? 'selected' : '' %>>Clothing / Accessories</option>
+      <option value="Keys / Wallets" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Keys / Wallets' ? 'selected' : '' %>>Keys / Wallets</option>
+      <option value="Water Bottle" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Water Bottle' ? 'selected' : '' %>>Water Bottle</option>
+      <option value="Other" <%= typeof selectedCategory !== 'undefined' && selectedCategory === 'Other' ? 'selected' : '' %>>Other</option>
+    </select>
+    <select name="status" class="filter-select">
+      <option value="">All Statuses</option>
+      <option value="Found" <%= typeof selectedStatus !== 'undefined' && selectedStatus === 'Found' ? 'selected' : '' %>>Found (Open to Claims)</option>
+      <option value="Returned" <%= typeof selectedStatus !== 'undefined' && selectedStatus === 'Returned' ? 'selected' : '' %>>Returned (Closed)</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+    <% if ((typeof searchQuery !== 'undefined' && searchQuery) || (typeof selectedCategory !== 'undefined' && selectedCategory) || (typeof selectedStatus !== 'undefined' && selectedStatus)) { %>
+      <a href="/found-items" class="btn btn-outline">Clear</a>
+    <% } %>
+  </form>
+</div>
+
+<!-- Items Grid -->
+<% if (items && items.length > 0) { %>
+  <div class="items-grid">
+    <% items.forEach(item => { %>
+      <div class="card">
+        <div class="card-header">
+          <a href="/found-items/<%= item._id %>" class="card-title"><%= item.itemName %></a>
+          <span class="badge <%= item.status === 'Returned' ? 'badge-returned' : 'badge-found' %>">
+            <%= item.status === 'Returned' ? '✓ Returned' : item.status %>
+          </span>
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-category" style="width: fit-content;"><%= item.category %></span>
+          <div class="card-meta-row">
+            <strong>Found Location:</strong> <%= item.foundLocation %>
+          </div>
+          <div class="card-meta-row">
+            <strong>Date Found:</strong> <%= new Date(item.dateFound).toLocaleDateString() %>
+          </div>
+          <% if (item.reportedBy) { %>
+            <div class="card-meta-row">
+              <strong>Reported By:</strong>
+              <a href="/students/<%= item.reportedBy._id %>"><%= item.reportedBy.fullName %></a>
+            </div>
+          <% } %>
+        </div>
+        <p class="card-description"><%= item.description %></p>
+        <div class="card-footer">
+          <span style="color: var(--text-muted); font-size: 0.8rem;">
+            <%= new Date(item.createdAt).toLocaleDateString() %>
+          </span>
+          <a href="/found-items/<%= item._id %>" class="btn btn-sm <%= item.status === 'Returned' ? 'btn-outline' : 'btn-primary' %>">
+            <%= item.status === 'Returned' ? 'View Details &rarr;' : 'View & Claim &rarr;' %>
+          </a>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div class="empty-state">
+    <h3>No found items have been reported yet.</h3>
+    <p><%= (typeof searchQuery !== 'undefined' && searchQuery) || (typeof selectedCategory !== 'undefined' && selectedCategory) || (typeof selectedStatus !== 'undefined' && selectedStatus) ? 'No items match your search criteria. Try a different query or clear filters.' : 'Have you found an item on campus? Register it to help find its rightful owner.' %></p>
+    <a href="/found-items/new" class="btn btn-success">Report a Found Item</a>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>
