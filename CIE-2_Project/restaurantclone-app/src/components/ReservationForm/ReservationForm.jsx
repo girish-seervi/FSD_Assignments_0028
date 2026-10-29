@@ -20,6 +20,12 @@ const Reservation = () => {
       toast.error('Please fill all fields');
       return;
     }
+    
+    if(!email.endsWith('@gmail.com') && !email.endsWith('@rvu.edu.in')) {
+      toast.error('Email must be @gmail.com or @rvu.edu.in');
+      return;
+    }
+
     toast.success('Reservation sent successfully!');
     setFirstName("");
     setLastName("");
