@@ -1,0 +1,29 @@
+[
+  {
+    "id": "user-1",
+    "name": "Alex Chen",
+    "email": "alex.chen@campus.edu",
+    "password": "$2a$10$QuHiUrPcqJarosypMSVyguL9/QUaSEZ0reyokvSj6cH.04w0zBp6G",
+    "studentId": "STU2024001",
+    "college": "School of Engineering & Computing",
+    "createdAt": "2024-09-01T10:00:00.000Z"
+  },
+  {
+    "id": "user-2",
+    "name": "Sarah Jenkins",
+    "email": "sarah.j@campus.edu",
+    "password": "$2a$10$QuHiUrPcqJarosypMSVyguL9/QUaSEZ0reyokvSj6cH.04w0zBp6G",
+    "studentId": "STU2024045",
+    "college": "Faculty of Science & Mathematics",
+    "createdAt": "2024-09-15T12:30:00.000Z"
+  },
+  {
+    "id": "user-3",
+    "name": "Marcus Williams",
+    "email": "marcus.w@campus.edu",
+    "password": "$2a$10$QuHiUrPcqJarosypMSVyguL9/QUaSEZ0reyokvSj6cH.04w0zBp6G",
+    "studentId": "STU2024108",
+    "college": "School of Business & Economics",
+    "createdAt": "2024-10-02T14:15:00.000Z"
+  }
+]

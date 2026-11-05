@@ -1,0 +1,46 @@
+[
+  {
+    "id": "notif-301",
+    "userId": "user-1",
+    "title": "New Borrowing Request",
+    "message": "Sarah Jenkins requested to borrow your 'Texas Instruments TI-84 Plus CE Graphing Calculator'.",
+    "type": "request_received",
+    "requestId": "req-202",
+    "itemId": "item-101",
+    "read": false,
+    "createdAt": "2024-11-04T10:15:00.000Z"
+  },
+  {
+    "id": "notif-302",
+    "userId": "user-1",
+    "title": "Request Accepted",
+    "message": "Marcus Williams accepted your request for 'Logitech Wireless Presenter Clicker with Red Laser Pointer'.",
+    "type": "request_accepted",
+    "requestId": "req-204",
+    "itemId": "item-108",
+    "read": true,
+    "createdAt": "2024-11-02T19:00:00.000Z"
+  },
+  {
+    "id": "notif-303",
+    "userId": "user-1",
+    "title": "Item Return Confirmed",
+    "message": "Marcus Williams returned 'Wilson Pro Staff Tennis Racket with Tour Cover'. Transaction completed.",
+    "type": "return_confirmed",
+    "requestId": "req-203",
+    "itemId": "item-104",
+    "read": true,
+    "createdAt": "2024-10-29T11:00:00.000Z"
+  },
+  {
+    "id": "notif-304",
+    "userId": "user-2",
+    "title": "Request Accepted",
+    "message": "You accepted Alex Chen's request for 'Campbell Biology (12th Edition) & Lab Manual'.",
+    "type": "request_accepted",
+    "requestId": "req-201",
+    "itemId": "item-102",
+    "read": true,
+    "createdAt": "2024-11-01T09:30:00.000Z"
+  }
+]

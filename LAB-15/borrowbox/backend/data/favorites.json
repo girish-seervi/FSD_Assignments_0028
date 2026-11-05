@@ -1,0 +1,12 @@
+[
+  {
+    "userId": "user-1",
+    "itemId": "item-106",
+    "createdAt": "2024-10-23T12:00:00.000Z"
+  },
+  {
+    "userId": "user-2",
+    "itemId": "item-101",
+    "createdAt": "2024-10-25T14:30:00.000Z"
+  }
+]
